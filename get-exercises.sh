@@ -46,9 +46,15 @@ pushd "${lang}" &>/dev/null
 
 echo -e "${strong}${yellow}\nDownloading ${n} exercises...${reset}\n\n"
 while read -r exercise; do
-  echo -e "${strong}\n${i}. ${blue}${exercise}...${reset}"
-  exercism download --exercise="${exercise}" --track="${lang}"
   i=$(( i + 1))
+
+  if [ -d "${exercise}" ]; then
+    echo -e "${strong}\n${i}. ${blue}${exercise}... ${yellow}noop${reset}"
+
+  else
+    echo -e "${strong}\n${i}. ${blue}${exercise}... ${green}get${reset}"
+    exercism download --exercise="${exercise}" --track="${lang}"
+  fi
 done <<< "$exercises"
 popd &>/dev/null
 
