@@ -1,0 +1,23 @@
+{
+  "authors": [
+    "sjakobi"
+  ],
+  "contributors": [
+    "amscotti",
+    "ee7"
+  ],
+  "files": {
+    "solution": [
+      "leap.nim"
+    ],
+    "test": [
+      "test_leap.nim"
+    ],
+    "example": [
+      ".meta/example.nim"
+    ]
+  },
+  "blurb": "Given a year, report if it is a leap year.",
+  "source": "JavaRanch Cattle Drive, exercise 3",
+  "source_url": "http://www.javaranch.com/leap.jsp"
+}

@@ -1,0 +1,17 @@
+{
+  "authors": [
+    "ee7"
+  ],
+  "files": {
+    "solution": [
+      "scale_generator.nim"
+    ],
+    "test": [
+      "test_scale_generator.nim"
+    ],
+    "example": [
+      ".meta/example.nim"
+    ]
+  },
+  "blurb": "Generate musical scales, given a starting note and a set of intervals."
+}

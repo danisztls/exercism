@@ -1,0 +1,19 @@
+{
+  "authors": [
+    "ee7"
+  ],
+  "files": {
+    "solution": [
+      "kindergarten_garden.nim"
+    ],
+    "test": [
+      "test_kindergarten_garden.nim"
+    ],
+    "example": [
+      ".meta/example.nim"
+    ]
+  },
+  "blurb": "Given a diagram, determine which plants each child in the kindergarten class is responsible for.",
+  "source": "Random musings during airplane trip.",
+  "source_url": "http://jumpstartlab.com"
+}
