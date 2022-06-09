@@ -38,15 +38,18 @@ exercises=$(
   sed "s/tracks\/${lang}\/exercises\///"
 )
 
+n=$(wc -l <<< "$exercises")
+i=0
+
 mkdir -p "${lang}"
 pushd "${lang}" &>/dev/null
 
-echo -e "${strong}${yellow}\nDownloading exercises...${reset}\n\n"
-
+echo -e "${strong}${yellow}\nDownloading ${n} exercises...${reset}\n\n"
 while read -r exercise; do
-  echo -e "${strong}\nget... ${blue}${exercise}...${reset}\n"
+  echo -e "${strong}\n${i}. ${blue}${exercise}...${reset}"
   exercism download --exercise="${exercise}" --track="${lang}"
+  i=$(( i + 1))
 done <<< "$exercises"
 popd &>/dev/null
 
-echo -e "${strong}${green}All done!${reset}\n"
+echo -e "${strong}${green}\nAll done!${reset}\n"
