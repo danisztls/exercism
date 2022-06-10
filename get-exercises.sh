@@ -6,18 +6,6 @@
 
 # Usage: get-exercises.sh <lang>
 
-# Debug
-# exit when a command has a non-zero exit status
-# note: '||:' at the end of a pipe mask a non-zero exit
-set -e
-
-# exit when referencing undefined variable
-# note: $* and $@ are exceptions
-set -u
-
-# exit if any command in a pipe fail
-set -o pipefail
-
 # Utils
 # decorators
 reset="\e[0m"
@@ -42,7 +30,7 @@ n=$(wc -l <<< "$exercises")
 i=0
 
 mkdir -p "${lang}"
-pushd "${lang}" &>/dev/null
+pushd "${lang}" &>/dev/null || exit
 
 echo -e "${strong}${yellow}\nDownloading ${n} exercises...${reset}\n\n"
 while read -r exercise; do
@@ -56,6 +44,6 @@ while read -r exercise; do
     exercism download --exercise="${exercise}" --track="${lang}"
   fi
 done <<< "$exercises"
-popd &>/dev/null
+popd &>/dev/null || exit
 
 echo -e "${strong}${green}\nAll done!${reset}\n"
