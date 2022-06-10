@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# Download all exercises from a Exercism track and save time
+# Download in batch exercises from a Exercism track
 
 # @author: Daniel Souza <me@posix.dev.br>
 # @license: MIT
-
-# Usage: get-exercises.sh <lang>
+# @usage: get-exercises.sh <lang>
+# @deps: curl, jq
 
 # Utils
 # decorators
-reset="\e[0m"
+reset="\e[0;0m"
 strong="\e[1;39m"
 blue="\e[1;34m"
 # red="\e[1;31m"
@@ -17,13 +17,16 @@ green="\e[1;32m"
 
 # Main
 lang="$1"
+url="https://exercism.org/api/v2/tracks/${lang}/exercises"
+token=""
+source ".env"  # source token from env
 
 echo -e "${strong}${yellow}Getting list of exercises\t${reset}\n\n"
 
 exercises=$(
-  curl -LS "https://exercism.io/tracks/${lang}/exercises" |
-  grep -o "tracks/${lang}/exercises/[^&]*" |
-  sed "s/tracks\/${lang}\/exercises\///"
+  curl -H "Authorization: Bearer ${token}" -S "$url" |
+  jq '.[] | .[] | select(.is_unlocked == true) | .slug' |
+  sed 's/"//g'
 )
 
 n=$(wc -l <<< "$exercises")
@@ -32,15 +35,15 @@ i=0
 mkdir -p "${lang}"
 pushd "${lang}" &>/dev/null || exit
 
-echo -e "${strong}${yellow}\nDownloading ${n} exercises...${reset}\n\n"
+echo -e "${strong}${yellow}\nDownloading ${n} exercises...${reset}\n"
 while read -r exercise; do
   i=$(( i + 1))
 
   if [ -d "${exercise}" ]; then
-    echo -e "${strong}\n${i}. ${blue}${exercise}... ${yellow}noop${reset}"
+    echo -e "${strong}\n${i}. ${blue}${exercise}... ${yellow}NOOP${reset}"
 
   else
-    echo -e "${strong}\n${i}. ${blue}${exercise}... ${green}get${reset}"
+    echo -e "${strong}\n${i}. ${blue}${exercise}... ${green}GET${reset}"
     exercism download --exercise="${exercise}" --track="${lang}"
   fi
 done <<< "$exercises"
